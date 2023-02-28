@@ -3,7 +3,7 @@ import {people} from "./TailwindComponent";
 export default function FormComponent() {
     return (
         <>
-        <form className="space-y-6" action="#" method="POST">
+        <form data-testid="form" className="space-y-6" action="#" method="POST">
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
                 <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="md:col-span-1">
