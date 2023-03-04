@@ -1,15 +1,28 @@
 import { useContext, useReducer } from 'react';
 import Button from './Button';
 import UsersListContext from '../Context/UsersListContext';
+import EditModeContext from '../Context/EditModeContext';
 
 export default function FormComponent() {
     //users list context from App.js
     const { users, setUsers } = useContext(UsersListContext);
+    const { editMode, setEditMode } = useContext(EditModeContext);
+    // const editMode = true;
 
     function handleSubmit(e) {
         e.preventDefault();
         //spread existing users then add newly submitted user from reducer state below
-        setUsers([...users, newUser]);
+        //for the selected user to edit, overwrite their object with the newUSer object
+        setEditMode({
+            ...editMode,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            title: newUser.title,
+            email: newUser.email,
+            role: newUser.role,
+        });
+        //remove the currently selected user and replace with new user (editMode as above)
+        setUsers([...users, editMode]);
     }
 
     //reducer maintaining state for all input values ****
@@ -68,6 +81,11 @@ export default function FormComponent() {
                                         type='text'
                                         name='first-name'
                                         id='first-name'
+                                        //CONTROLLED INPUT
+                                        //if edit mode has a value, make input value editMode.firstName else leave blank
+                                        defaultValue={
+                                            editMode ? editMode.firstName : ''
+                                        }
                                         className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                                         onChange={(e) => {
                                             dispatch({
@@ -89,6 +107,9 @@ export default function FormComponent() {
                                         type='text'
                                         name='last-name'
                                         id='last-name'
+                                        defaultValue={
+                                            editMode ? editMode.lastName : ''
+                                        }
                                         className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                                         onChange={(e) => {
                                             dispatch({
@@ -110,6 +131,9 @@ export default function FormComponent() {
                                         type='text'
                                         name='email-address'
                                         id='email-address'
+                                        defaultValue={
+                                            editMode ? editMode.email : ''
+                                        }
                                         className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                                         onChange={(e) => {
                                             dispatch({
@@ -130,6 +154,9 @@ export default function FormComponent() {
                                     <input
                                         id='title'
                                         name='title'
+                                        defaultValue={
+                                            editMode ? editMode.title : ''
+                                        }
                                         className='mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
                                         onChange={(e) => {
                                             dispatch({
@@ -151,6 +178,9 @@ export default function FormComponent() {
                                         type='text'
                                         name='role'
                                         id='role'
+                                        defaultValue={
+                                            editMode ? editMode.role : ''
+                                        }
                                         className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                                         onChange={(e) => {
                                             dispatch({

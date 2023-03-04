@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UsersListContext from '../Context/UsersListContext';
 import Button from './Button';
 
 function PageSummary() {
+    const { users, setUsers } = useContext(UsersListContext);
+
     return (
         <div>
             <div className='sm:flex sm:items-center'>
@@ -19,6 +22,16 @@ function PageSummary() {
                         text={'Add user'}
                         onClick={() => {
                             console.log('Adding user');
+                            setUsers([
+                                ...users,
+                                {
+                                    firstName: 'Demo',
+                                    lastName: `Data (${users.length + 1})`,
+                                    title: 'Software Developer',
+                                    email: `demo${users.length + 1}@data.com`,
+                                    role: 'admin',
+                                },
+                            ]);
                         }}
                     />
                 </div>

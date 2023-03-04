@@ -1,8 +1,22 @@
 import { useContext } from 'react';
 import UsersListContext from '../Context/UsersListContext';
+import EditModeContext from '../Context/EditModeContext';
 
 function UsersTable() {
     const { users } = useContext(UsersListContext);
+    const { setEditMode } = useContext(EditModeContext);
+
+    function handleEdit(person) {
+        const editPerson = {
+            firstName: person.firstName,
+            lastName: person.lastName,
+            email: person.email,
+            title: person.title,
+            role: person.role,
+        };
+        //pass this object to populate the form so it can be edited...
+        setEditMode(editPerson);
+    }
     return (
         <>
             <table className='min-w-full divide-y divide-gray-300'>
@@ -58,7 +72,7 @@ function UsersTable() {
                             <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
                                 <button
                                     onClick={() => {
-                                        alert('can this be edited?');
+                                        handleEdit(person);
                                     }}
                                     className='text-indigo-600 hover:text-indigo-900'
                                 >
